@@ -32,7 +32,8 @@ namespace eth
 {
 
 /// An Ethereum address: 20 bytes.
-using Address = h160;
+//using Address = h160;
+using Address = h512;
 
 /// The log bloom's size (2048-bit).
 using LogBloom = h2048;
@@ -64,7 +65,7 @@ using BlockNumber = unsigned;
 class BlockHeader
 {
 public:
-	static const unsigned BasicFields = 13;
+	static const unsigned BasicFields = 15;
 
 	BlockHeader() = default;
 	explicit BlockHeader(bytesConstRef _data);
@@ -100,6 +101,8 @@ private:
 	h256 m_receiptsRoot;
 	LogBloom m_logBloom;
 	u256 m_number;
+	u256 m_reward;
+	bytes m_pubkey;
 	u256 m_gasLimit;
 	u256 m_gasUsed;
 	u256 m_timestamp = Invalid256;

@@ -57,7 +57,7 @@ h256 const& BlockHeader::hashWithout() const
 void BlockHeader::streamRLPFields(RLPStream& _s) const
 {
 	_s	<< m_parentHash << m_sha3Uncles << m_coinbaseAddress << m_stateRoot << m_transactionsRoot << m_receiptsRoot << m_logBloom
-		<< m_difficulty << m_number << m_gasLimit << m_gasUsed << m_timestamp << m_extraData;
+		<< m_difficulty << m_reward << m_number << m_gasLimit << m_gasUsed << m_timestamp << m_extraData << m_pubkey;
 }
 
 RLP BlockHeader::extractHeader(bytesConstRef _block)
@@ -88,11 +88,13 @@ void BlockHeader::populateFromHeader(RLP const& _header)
 		m_receiptsRoot = _header[field = 5].toHash<h256>(RLP::VeryStrict);
 		m_logBloom = _header[field = 6].toHash<LogBloom>(RLP::VeryStrict);
 		m_difficulty = _header[field = 7].toInt<u256>();
-		m_number = _header[field = 8].toInt<u256>();
-		m_gasLimit = _header[field = 9].toInt<u256>();
-		m_gasUsed = _header[field = 10].toInt<u256>();
-		m_timestamp = _header[field = 11].toInt<u256>();
-		m_extraData = _header[field = 12].toBytes();
+		m_reward = _header[field = 8].toInt<u256>();
+		m_number = _header[field = 9].toInt<u256>();
+		m_gasLimit = _header[field = 10].toInt<u256>();
+		m_gasUsed = _header[field = 11].toInt<u256>();
+		m_timestamp = _header[field = 12].toInt<u256>();
+		m_extraData = _header[field = 13].toBytes();
+		m_pubkey = _header[field = 14].toBytes();
 	}
 	catch (Exception const& _e)
 	{
